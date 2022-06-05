@@ -1,0 +1,15 @@
+<launch>
+  
+  <rosparam param="thresh/">
+    high: {h: 0, s: 0, v: 170}
+    low: {h: 0, s: 0, v: 95}
+  </rosparam>
+
+  <remap to="/cv_camera/image_raw"  from="/iris/usb_cam/image_raw"/>
+  <include file="$(find px4)/launch/mavros_posix_sitl.launch">
+      <arg name="sdf" value="/home/robot/px4sim/src/Firmware/Tools/sitl_gazebo/models/iris_fpv_cam/iris_fpv_cam_1.sdf"/>
+  </include>
+  <include file="$(find ball_detector)/launch/ballDetector.launch"/>
+  <include file="$(find ball_detector)/launch/displayDebugImages.launch"/>
+
+</launch>

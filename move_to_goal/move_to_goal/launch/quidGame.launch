@@ -1,0 +1,15 @@
+<launch>
+	<arg name="yellow_goal" default="/home/robot/model_editor_models/quidditch_goalpost_yellow/model.sdf"/>
+        <arg name="quid_ball" default="/home/robot/catkin_ws/src/move_to_goal/models/ball/model.sdf"/>
+	<remap to="/cv_camera/image_raw"  from="/iris/usb_cam/image_raw"/>
+	<include file="$(find px4)/launch/mavros_posix_sitl.launch">
+		<arg name="sdf" value="/home/robot/px4sim/src/Firmware/Tools/sitl_gazebo/models/iris_fpv_cam/iris_fpv_cam.sdf"/>
+	</include>
+        <include file="$(find move_to_goal)/launch/yellowGoalDetector.launch"/>
+        <include file="$(find ball_detector)/launch/displayDebugImages.launch"/>
+	<node name="blue_goal_node" pkg="gazebo_ros" type="spawn_model" output="screen" args="-sdf -file $(arg yellow_goal) -model goal1 -x 7 -y 3 -z 0 -R 0 -P 0 -Y 1.5707"/>
+	<node name="red_goal_node" pkg="gazebo_ros" type="spawn_model" output="screen" args="-sdf -file $(arg yellow_goal) -model goal2 -x 7 -y -3 -z 0 -R 0 -P 0 -Y 1.5707"/>
+	<node name="yellow_goal_node" pkg="gazebo_ros" type="spawn_model" output="screen" args="-sdf -file $(arg yellow_goal) -model goal3 -x 7 -y 0 -z 0 -R 0 -P 0 -Y 1.5707"/>
+        <node name="ball" pkg="gazebo_ros" type="spawn_model" output="screen" args="-sdf -file $(arg quid_ball) -model ball -x -3 -y 0 -z 4 -R 0 -P 0 -Y 1.5707"/>
+</launch>
+

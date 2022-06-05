@@ -1,0 +1,13 @@
+<launch>
+  
+  <rosparam param="thresh/">
+    high: {h: 23, s: 255, v: 255}
+    low: {h: 0, s: 255, v: 0}
+  </rosparam>
+
+  <node name="redGoal_detector_node" pkg="ball_detector" type="ball_detector_node" output="screen">
+   <remap from="image" to="/cv_camera/image_raw"/>
+   <remap to="redGoal" from="ballLocation"/>
+  </node>
+
+</launch>
